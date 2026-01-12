@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "description": "Agentic Context Engine (ACE) integration for OpenCode - Self-improving AI agents that learn from experience",
   "author": {
-    "name": "OpenCode User",
-    "email": "user@opencode.ai"
+    "name": "Sourabh",
+    "email": "uuc110@gmail.com"
   },
   "type": "module",
   "main": "./dist/index.js",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/opencode-ai/opencode-ace"
+    "url": "https://github.com/uuc110/opencode-ace"
   },
   "publishConfig": {
     "access": "public",
