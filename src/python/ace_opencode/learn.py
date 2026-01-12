@@ -13,7 +13,7 @@ from pathlib import Path
 from datetime import datetime, timezone
 from typing import Optional, List
 
-from skillbook_manager import SkillbookManager, Skill
+from .skillbook_manager import SkillbookManager, Skill
 
 
 def format_reflector_prompt(task: str, result: str, success: bool) -> str:
