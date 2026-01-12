@@ -1,0 +1,67 @@
+{
+  "name": "opencode-ace",
+  "version": "0.1.0",
+  "description": "Agentic Context Engine (ACE) integration for OpenCode - Self-improving AI agents that learn from experience",
+  "author": {
+    "name": "OpenCode User",
+    "email": "user@opencode.ai"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/opencode-ai/opencode-ace"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "files": [
+    "dist",
+    "src/version.ts",
+    "skillbooks",
+    "config"
+  ],
+  "scripts": {
+    "build": "bun build ./src/index.ts --outdir dist --target bun",
+    "test": "bun test",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "format": "prettier --write src/",
+    "python:install": "pip install -r requirements.txt",
+    "python:test": "python -m pytest src/python/tests/"
+  },
+  "dependencies": {
+    "@opencode-ai/plugin": "1.0.85",
+    "@opencode-ai/sdk": "^1.1.13"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/node": "^20.11.5",
+    "@typescript-eslint/eslint-plugin": "8.47.0",
+    "@typescript-eslint/parser": "8.47.0",
+    "bun-types": "latest",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-prettier": "^5.1.3",
+    "prettier": "^3.2.4",
+    "typescript-eslint": "^8.47.0",
+    "vitest": "^3.2.4"
+  },
+  "keywords": [
+    "opencode",
+    "plugin",
+    "ace",
+    "agentic-context-engine",
+    "self-improving",
+    "skillbook",
+    "learning"
+  ],
+  "license": "MIT"
+}

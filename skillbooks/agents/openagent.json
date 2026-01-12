@@ -1,0 +1,66 @@
+{
+  "version": "1.0.0",
+  "updatedAt": "2026-01-11T15:18:58.944407+00:00",
+  "skills": [
+    {
+      "id": "general-00001",
+      "section": "general",
+      "content": "Always load context files before delegating to subagents",
+      "helpful": 3,
+      "harmful": 0,
+      "neutral": 0,
+      "createdAt": "2026-01-11T12:05:07.528023+00:00",
+      "updatedAt": "2026-01-11T12:05:14.786589+00:00"
+    },
+    {
+      "id": "success-00001",
+      "section": "success",
+      "content": "Successfully executed: Create a React component",
+      "helpful": 0,
+      "harmful": 0,
+      "neutral": 0,
+      "createdAt": "2026-01-11T12:05:56.576807+00:00",
+      "updatedAt": "2026-01-11T12:05:56.576816+00:00"
+    },
+    {
+      "id": "test-00001",
+      "section": "test",
+      "content": "Always validate input before processing",
+      "helpful": 0,
+      "harmful": 0,
+      "neutral": 0,
+      "createdAt": "2026-01-11T12:14:56.445868+00:00",
+      "updatedAt": "2026-01-11T12:15:03.307583+00:00"
+    },
+    {
+      "id": "success-00002",
+      "section": "success",
+      "content": "Use npm install to add dependencies to package.json",
+      "helpful": 0,
+      "harmful": 0,
+      "neutral": 0,
+      "createdAt": "2026-01-11T15:18:58.942786+00:00",
+      "updatedAt": "2026-01-11T15:18:58.942801+00:00"
+    },
+    {
+      "id": "success-00003",
+      "section": "success",
+      "content": "Use import statements to include necessary modules",
+      "helpful": 0,
+      "harmful": 0,
+      "neutral": 0,
+      "createdAt": "2026-01-11T15:18:58.943545+00:00",
+      "updatedAt": "2026-01-11T15:18:58.943550+00:00"
+    },
+    {
+      "id": "success-00004",
+      "section": "success",
+      "content": "Always run npm test before committing changes",
+      "helpful": 0,
+      "harmful": 0,
+      "neutral": 0,
+      "createdAt": "2026-01-11T15:18:58.944376+00:00",
+      "updatedAt": "2026-01-11T15:18:58.944380+00:00"
+    }
+  ]
+}

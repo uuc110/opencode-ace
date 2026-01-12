@@ -1,0 +1,217 @@
+{
+  "$schema": "./ace-config.schema.json",
+  "version": "3.0.0",
+  "enabled": true,
+  "asyncLearning": true,
+  "autoInjectContext": true,
+  "autoLearn": true,
+  "learningModels": [
+    {
+      "providerID": "zai-coding-plan",
+      "modelID": "glm-4.6V"
+    },
+    {
+      "providerID": "github-copilot",
+      "modelID": "gemini-3-flash-preview"
+    }
+  ],
+  "learningTriggers": {
+    "intervalMinutes": 5,
+    "onErrorResolution": true,
+    "onTaskCompletion": true,
+    "minMessagesForCompletion": 3,
+    "maxLearningPerSession": 10
+  },
+  "skillValidation": {
+    "minLength": 50,
+    "maxLength": 2000,
+    "requireEvidence": true,
+    "minAtomicityScore": 0.7
+  },
+  "contextAware": {
+    "enabled": true,
+    "detectionMode": "both",
+    "fallbackToGlobal": true,
+    "autoUpdateDetection": true,
+    "maxContextRetention": 7
+  },
+  "masterMemory": {
+    "global": {
+      "path": "skillbooks/global/universal.json",
+      "alwaysLoad": true,
+      "promotionThreshold": 10,
+      "minPromotionScore": 0.9
+    }
+  },
+  "skillbookHierarchy": {
+    "global": {
+      "universal": "skillbooks/global/universal.json"
+    },
+    "languages": {
+      "python": "skillbooks/languages/python.json",
+      "typescript": "skillbooks/languages/typescript.json",
+      "javascript": "skillbooks/languages/javascript.json",
+      "go": "skillbooks/languages/go.json",
+      "rust": "skillbooks/languages/rust.json"
+    },
+    "frameworks": {
+      "react": "skillbooks/frameworks/react.json",
+      "vue": "skillbooks/frameworks/vue.json",
+      "django": "skillbooks/frameworks/django.json",
+      "fastapi": "skillbooks/frameworks/fastapi.json",
+      "nextjs": "skillbooks/frameworks/nextjs.json"
+    },
+    "projects": {
+      "enabled": true,
+      "basePath": ".ace/skills.json",
+      "relativeToWorkDir": true
+    }
+  },
+  "detectionRules": {
+    "languages": [
+      {
+        "name": "python",
+        "files": ["requirements.txt", "pyproject.toml", "setup.py", "*.py"],
+        "priority": 10
+      },
+      {
+        "name": "typescript",
+        "files": ["tsconfig.json", "*.ts", "*.tsx"],
+        "priority": 10
+      },
+      {
+        "name": "javascript",
+        "files": ["package.json", "*.js", "*.jsx"],
+        "priority": 5
+      },
+      {
+        "name": "go",
+        "files": ["go.mod", "*.go"],
+        "priority": 10
+      },
+      {
+        "name": "rust",
+        "files": ["Cargo.toml", "*.rs"],
+        "priority": 10
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "react",
+        "files": ["package.json"],
+        "dependencies": ["react", "react-dom"],
+        "directories": ["components", "hooks"],
+        "priority": 10
+      },
+      {
+        "name": "vue",
+        "files": ["package.json"],
+        "dependencies": ["vue"],
+        "extensions": [".vue"],
+        "priority": 10
+      },
+      {
+        "name": "django",
+        "files": ["settings.py", "manage.py", "urls.py"],
+        "directories": ["apps", "templates"],
+        "priority": 10
+      },
+      {
+        "name": "fastapi",
+        "files": ["requirements.txt"],
+        "dependencies": ["fastapi", "uvicorn"],
+        "imports": ["from fastapi import", "from fastapi.responses import"],
+        "priority": 10
+      },
+      {
+        "name": "nextjs",
+        "files": ["next.config.js", "next.config.ts"],
+        "directories": ["app", "pages"],
+        "priority": 10
+      }
+    ],
+    "projectTypes": [
+      {
+        "name": "frontend",
+        "frameworks": ["react", "vue", "nextjs", "svelte"],
+        "languages": ["typescript", "javascript"],
+        "directories": ["src/components", "src/pages", "app"]
+      },
+      {
+        "name": "backend",
+        "frameworks": ["django", "fastapi", "flask", "express"],
+        "languages": ["python", "javascript", "go"],
+        "directories": ["api", "server", "routes", "models"]
+      }
+    ]
+  },
+  "routingRules": {
+    "default": "global/universal",
+    "priorityOrder": ["framework", "language", "projectType"],
+    "useLLMFallback": true,
+    "byContext": {
+      "language": {
+        "python": "languages/python",
+        "typescript": "languages/typescript",
+        "javascript": "languages/javascript"
+      },
+      "framework": {
+        "react": "frameworks/react",
+        "django": "frameworks/django",
+        "fastapi": "frameworks/fastapi"
+      },
+      "projectType": {
+        "frontend": "global/universal",
+        "backend": "global/universal"
+      }
+    },
+    "fallbackPriority": ["global/universal"]
+  },
+  "promotionRules": {
+    "enabled": true,
+    "criteria": {
+      "minHelpfulScore": 10,
+      "minSuccessRate": 0.85,
+      "ageThreshold": 14,
+      "usageCount": 5
+    },
+    "reviewInterval": 7
+  },
+  "agents": {
+    "openagent": {
+      "enabled": true,
+      "skillbook": "agents/openagent.json",
+      "useGlobalSkillbook": true,
+      "learningMode": "async"
+    },
+    "opencoder": {
+      "enabled": true,
+      "skillbook": "agents/opencoder.json",
+      "useGlobalSkillbook": true,
+      "learningMode": "async"
+    },
+    "task-manager": {
+      "enabled": false,
+      "skillbook": "agents/task-manager.json",
+      "useGlobalSkillbook": true,
+      "learningMode": "sync"
+    }
+  },
+  "skillbookSettings": {
+    "autoSave": true,
+    "saveInterval": 10,
+    "maxSkillsPerSection": 50,
+    "deduplication": {
+      "enabled": true,
+      "similarityThreshold": 0.85
+    }
+  },
+  "paths": {
+    "skillbooks": "./skillbooks",
+    "pythonModule": "./src/python"
+  },
+  "observability": {
+    "enabled": false,
+    "trackCosts": true
+  }
+}
