@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ace-opencode"
+version = "0.1.0"
+description = "ACE Framework integration with OpenCode"
+requires-python = ">=3.10"
+dependencies = [
+    "ace-framework>=0.7.1",
+    "instructor>=1.0.0",
+    "requests>=2.31.0",
+    "pydantic>=2.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/uuc110/opencode-ace"
+Repository = "https://github.com/uuc110/opencode-ace"
+
+[tool.setuptools.packages.find]
+where = ["src/python"]

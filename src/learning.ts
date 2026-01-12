@@ -417,73 +417,12 @@ export async function applyReflection(
   sessionState?: SessionState
 ): Promise<{ success: boolean; error?: string; skillsAdded?: number }> {
   try {
-    console.log(`[ACE] Starting reflection for agent ${agentId}`);
-
-    const reflection = await reflectAndExtract(task, result, success, config);
-
-    const validation = (config as any).skillValidation || {
-      minLength: 50,
-      maxLength: 2000,
-      requireEvidence: true,
-      minAtomicityScore: 0.7,
-    };
-
-    const validPatterns = reflection.patterns.filter((pattern) => {
-      const result = validateSkill(pattern, validation);
-      if (!result.valid) {
-        console.log(`[ACE] Rejected pattern: ${result.reason}`);
-        return false;
-      }
-      return true;
-    });
-
-    console.log(`[ACE] Valid patterns: ${validPatterns.length}/${reflection.patterns.length}`);
-
-    if (validPatterns.length === 0) {
-      console.log('[ACE] No valid patterns to save');
-      return { success: true, skillsAdded: 0 };
-    }
-
-    let skillbookPath: string;
-
-    if (sessionState?.projectContext && (config as any).contextAware?.enabled) {
-      const routerObj = await getMasterMemoryRouter(config);
-      if (!routerObj) {
-        throw new Error('Master memory router not initialized');
-      }
-
-      const routingDecision = await routerObj.router.routeSkill(
-        reflection.patterns[0] || validPatterns[0]?.content || '',
-        sessionState.projectContext
-      );
-
-      skillbookPath = path.join(import.meta.dir, '..', routingDecision.path);
-      console.log(`[ACE] Routing to: ${routingDecision.level} (${routingDecision.reason})`);
-    } else {
-      const agentConfig = config.agents[agentId];
-      skillbookPath = path.join(import.meta.dir, '..', 'skillbooks', agentConfig.skillbook);
-    }
-
-    const backupResult = await backupSkillbook(skillbookPath);
-    if (!backupResult.success) {
-      console.log(`[ACE] Backup warning: ${backupResult.error}`);
-    }
+    console.log(`[ACE] Starting ACE learning for agent ${agentId}`);
 
     const pythonArgs = {
-      agentId,
       task,
       result,
       success,
-      reflection: JSON.stringify({
-        reasoning: reflection.reasoning,
-        keyInsights: reflection.keyInsights,
-        patterns: validPatterns,
-        errorIdentified: reflection.errorIdentified,
-        rootCause: reflection.rootCause,
-        suggestedAction: reflection.suggestedAction,
-      }),
-      skillbookPath: path.basename(skillbookPath),
-      mode: 'reflection-only',
       context: sessionState?.projectContext ? {
         language: sessionState.projectContext.language,
         framework: sessionState.projectContext.framework,
@@ -495,11 +434,11 @@ export async function applyReflection(
     const isAsync = config.asyncLearning || agentConfig?.learningMode === 'async';
 
     if (isAsync) {
-      await callPythonAsync('learn.py', pythonArgs);
+      await callPythonAsync('learn_ace.py', pythonArgs);
       console.log('[ACE] Learning initiated (async)');
-      return { success: true, skillsAdded: validPatterns.length };
+      return { success: true, skillsAdded: 0 };
     } else {
-      const pythonResult = await callPythonSync('learn.py', pythonArgs);
+      const pythonResult = await callPythonSync('learn_ace.py', pythonArgs);
       if (!pythonResult.success) {
         throw new Error(pythonResult.error);
       }

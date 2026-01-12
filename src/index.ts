@@ -269,20 +269,6 @@ function formatContextAwareContext(skills: Skill[], sources: string[]): string {
   return lines.join('\n');
 }
 
-function getMasterMemoryRouter(config: AceConfig): { router: MasterMemoryRouter; hierarchy: SkillbookHierarchy } | null {
-  if (!cachedRouter) {
-    const hierarchy = (config as any).skillbookHierarchy;
-    const routingRules = (config as any).routingRules;
-    const promotionRules = (config as any).promotionRules;
-    
-    if (hierarchy && routingRules && promotionRules) {
-      const router = new MasterMemoryRouter(hierarchy, routingRules, { promotionRules });
-      cachedRouter = { router, hierarchy };
-    }
-  }
-  return cachedRouter;
-}
-
 async function getSkillbookContext(config: AceConfig, agentId: string): Promise<string> {
   const agentConfig = config.agents[agentId];
   if (!agentConfig) return '';
@@ -773,7 +759,14 @@ export const AcePlugin: Plugin = async () => {
         return 'ACE is disabled.';
       }
 
-      await triggerLearning(currentConfig, args.agentId, args.task, args.result, args.success);
+      const sessionState: SessionState = {
+        agentId: args.agentId,
+        contextInjected: false,
+        messageCount: 1,
+        projectContext: undefined
+      };
+
+      await applyReflection(currentConfig, args.agentId, args.task, args.result, args.success, sessionState);
       return `Learning triggered for ${args.agentId}`;
     },
   });
